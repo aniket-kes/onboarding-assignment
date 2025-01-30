@@ -10,7 +10,6 @@ class Roll
   end
   
   def roll
-  
     idx = 0
 
     while idx < num_of_dice
@@ -23,7 +22,6 @@ class Roll
   end
 
   def calc
-  
     counts = Hash.new(0)
     values.each { |value| counts[value] += 1 }
 
@@ -50,5 +48,4 @@ class Roll
     return cal_score
   end
     
-
 end
