@@ -1,3 +1,4 @@
+//To append values in the sample log 
 const fs = require('fs');
 const path = require('path');
 
@@ -12,10 +13,4 @@ const appendNumberToFile = () => {
     });
 };
 
-const intervalId = setInterval(appendNumberToFile, 10);
-
-process.on('SIGINT', () => {
-    clearInterval(intervalId);
-    console.log('Script terminated');
-    process.exit();
-});
+setInterval(appendNumberToFile, 10);

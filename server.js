@@ -22,11 +22,7 @@ const watcher = new Tailf(sample, linesToread);
 
 function begin() {
   const filePath = path.join(__dirname, 'sample.log');
-  watcher.start();
-
-  fs.watchFile(filePath, {"interval":1000}, (curr, prev) => {
-    watcher.readNewLines();
-  });
+  store_logs = watcher.start();  
 }
 
 begin();
@@ -41,16 +37,18 @@ app.get('/log', (req, res) => {
   res.sendFile(filePath)  
 })
 
-io.on('connection', (socket) => {
-  console.log('a user connected');
-  socket.emit("log", store_logs);
+io.on('connection', function(socket){
 
-  watcher.on("newLines", function newLines(data){
-    console.log('new lines', data);
-    io.emit("updated-log", data);
-  })
-})
+  console.log("connection established");
+
+  watcher.on("newLines", function process(data) {
+    socket.emit("updated-log",data);
+  });
+
+  socket.emit("log",store_logs);
+});
 
 server.listen(3000, () => {
     console.log('Server is running on port 3000')
 })
+
