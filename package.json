@@ -1,0 +1,28 @@
+{
+  "name": "tailf",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aniket-kes/onboarding-assignment.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aniket-kes/onboarding-assignment/issues"
+  },
+  "homepage": "https://github.com/aniket-kes/onboarding-assignment#readme",
+  "description": "",
+  "dependencies": {
+    "express": "^4.21.2",
+    "loaddash": "^0.0.1-security",
+    "lodash.debounce": "^4.0.8",
+    "nodemon": "^3.1.9",
+    "socket.io": "^4.8.1"
+  }
+}
