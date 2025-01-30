@@ -27,19 +27,19 @@ class Tailf extends event.EventEmitter {
       newLogs.forEach(log => {
         this.store_logs.push(log);
         if (this.store_logs.length > this.lines) {
-        this.store_logs.shift();
+          this.store_logs.shift();
         }
       });
 
       this.lastPosition = fileSize;
       fs.closeSync(fileDescriptor);
-      this.emit('newLines', newLogs);
+        this.emit('newLines', newLogs);
       }
     } catch (err) {
       if (err.code === 'ENOENT') {
-      console.error('File has been deleted');
+        console.error('File has been deleted');
       } else {
-      console.error('Error reading new lines:', err);
+        console.error('Error reading new lines:', err);
       }
     }
   }
@@ -61,26 +61,24 @@ class Tailf extends event.EventEmitter {
         position -= readSize;
         fs.readSync(fileDescriptor, buffer, 0, readSize, position);
 
-        for (let i = readSize-2; i >= 0; i--) {
+        for (let i = readSize - 1; i >= 0; i--) {
           if (buffer[i] === '\n'.charCodeAt(0)) {
             lineCount++;
-            if (lineCount === this.lines) {
-              position += i + 1;
+            if (lineCount > this.lines) {
+              position += i+1;
               break;
             }
           }
         }
       }
       
-      const remainingSize = fileSize - position; //Reading from the 1st line of last 10 lines
+      const remainingSize = fileSize - position - 1; //Reading from the 1st line of last 10 lines
       const remainingBuffer = Buffer.alloc(remainingSize);
       fs.readSync(fileDescriptor, remainingBuffer, 0, remainingSize, position);
       
       const logs = remainingBuffer.toString('utf8').split('\n');
-      logs.forEach(log => {
-        this.store_logs.push(log)
-      })
-  
+      logs.slice(-10).forEach((elem) => this.store_logs.push(elem));
+
       this.lastPosition = fileSize;
     } catch (err) {
       console.error('Error reading file:', err);
@@ -99,3 +97,4 @@ class Tailf extends event.EventEmitter {
 }
 
 module.exports = Tailf;
+

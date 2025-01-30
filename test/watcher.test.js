@@ -10,7 +10,7 @@ describe('Tailf', () => {
   let watcher;
   
     beforeEach(() => {
-      fs.writeFileSync(sampleFilePath, 'Line 1\nLine 2\nLine 3\nLine 4\nLine 5\nLine 6\nLine 7\nLine 8\nLine 9\nLine 10');
+      fs.writeFileSync(sampleFilePath, 'Line 1\nLine 2\nLine 3\nLine 4\nLine 5\nLine 6\nLine 7\nLine 8\nLine 9\nLine 10\n');
       watcher = new Tailf(sampleFilePath, linesToRead);
     });
 
@@ -31,7 +31,7 @@ describe('Tailf', () => {
 
     it('should read new lines added to the log file', (done) => {
       watcher.start();
-      fs.appendFileSync(sampleFilePath, '\nLine 11\nLine 12');
+      fs.appendFileSync(sampleFilePath, 'Line 11\nLine 12\n');
       watcher.readNewLines();
       expect(watcher.store_logs).to.have.lengthOf(10);
       expect(watcher.store_logs).to.include('Line 3');
@@ -46,13 +46,8 @@ describe('Tailf', () => {
         expect(newLogs).to.include('Line 12');
         done();
       });
-      fs.appendFileSync(sampleFilePath, '\nLine 11\nLine 12');
+      fs.appendFileSync(sampleFilePath, 'Line 11\nLine 12\n');
       watcher.readNewLines();
     });
-  
-    afterEach(() => {
-      if (fs.existsSync(sampleFilePath)) {
-        fs.unlinkSync(sampleFilePath);
-      }
-    });
 });
+
