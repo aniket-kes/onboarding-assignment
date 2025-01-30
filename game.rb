@@ -60,3 +60,4 @@ print "Enter number of players: "
 num_players = gets().chomp().to_i
 game = Game.new(num_players)
 game.play()
+
