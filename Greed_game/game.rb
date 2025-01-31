@@ -9,7 +9,7 @@ class Game
     @last_round = false
 
     num_players.times do |i|
-        @players << Player.new(i + 1)
+      @players << Player.new(i + 1)
     end
   end
 
