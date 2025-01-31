@@ -14,3 +14,4 @@ const appendNumberToFile = () => {
 };
 
 setInterval(appendNumberToFile, 10);
+
