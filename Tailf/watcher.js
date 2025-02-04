@@ -14,6 +14,10 @@ class Tailf extends event.EventEmitter {
     this.emitCount = 0
   }
 
+  getLogs() {
+    return this.store_logs;
+  }
+
   readNewLines() {
     try {
       const fileSize = fs.statSync(this.filePath).size;
@@ -92,7 +96,7 @@ class Tailf extends event.EventEmitter {
       watcher.readNewLines();
     });
 
-    return this.store_logs;
+    
   }    
 }
 

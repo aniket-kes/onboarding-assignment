@@ -10,7 +10,6 @@ const io = new Server(server);
 
 const fs = require('fs');
 const path = require('path');
-// const buffer = new Buffer.alloc(1024);
 
 sample = 'sample.log'
 let linesToread = 10
@@ -44,7 +43,8 @@ io.on('connection', function(socket){
   watcher.on("newLines", function process(data) {
     socket.emit("updated-log",data);
   });
-
+  
+  store_logs = watcher.getLogs();
   socket.emit("log",store_logs);
 });
 
